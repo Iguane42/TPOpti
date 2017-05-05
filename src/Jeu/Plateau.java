@@ -57,7 +57,7 @@ public class Plateau {
                 posSolution[n] = this.posDame[i];
                 
                 Plateau plateauVoisin = new Plateau(this.nbDame, posSolution);
-                plateauVoisin.printPosDame();
+                //plateauVoisin.printPosDame();
                 voisins.add(plateauVoisin);
             }
         }

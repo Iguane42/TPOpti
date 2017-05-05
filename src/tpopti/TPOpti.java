@@ -19,6 +19,7 @@ public class TPOpti {
     public static void main(String[] args) {
         // TODO code application logic here
         Plateau p = new Plateau(4);
+        //System.out.println(p.getValeurSolution());
     }
     
 }
