@@ -28,8 +28,8 @@ public class Plateau {
         }
         
         // Ajout Xavier
-        this.printPosDame();
-        System.out.println("Nombre de voisins : " + this.getVoisin().size());
+//        this.printPosDame();
+//        System.out.println("Nombre de voisins : " + this.getVoisin().size());
     }
     
     public Plateau(int nbDame, int[] posDame){
@@ -37,7 +37,7 @@ public class Plateau {
         this.taille = nbDame; // Car la taille du plateau est égale à nXn
         this.posDame = new int[posDame.length]; // Initialise le tableau des positons
         
-        // Copie la position des dames passé en paramètre
+        // Copie la position des dames passée en paramètre
         for(int i = 0; i < this.nbDame; i++){
             this.posDame[i] = posDame[i];
         }
