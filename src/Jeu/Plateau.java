@@ -6,6 +6,7 @@
 package Jeu;
 
 import java.util.ArrayList;
+import java.util.Random;
 
 /**
  *
@@ -17,6 +18,7 @@ public class Plateau {
     private int taille;
     private int[] posDame;
     private int valeur = -1;
+    private static Random rand = new Random();
     
     public Plateau(int nbDame){
         this.nbDame = nbDame;
@@ -51,7 +53,7 @@ public class Plateau {
         
         for(int i = 0; i < this.nbDame; i++){
             for(int n = i+1; n < this.nbDame; n++){
-                int[] posSolution = new int[this.nbDame];
+                int[] posSolution/* = new int[this.nbDame]*/;
                 
                 posSolution = this.posDame.clone();
                 posSolution[i] = this.posDame[n];
@@ -64,6 +66,19 @@ public class Plateau {
         }
         
         return voisins;
+    }
+    
+    public Plateau getRandomVoisin()
+    {
+        int x1 = rand.nextInt(taille);
+        int x2 = rand.nextInt(taille);
+        while (x1 == x2) {
+            x2 = rand.nextInt(taille);
+        }
+        int[] buffer = posDame.clone();
+        buffer[x1] = posDame[x2];
+        buffer[x2] = posDame[x1];
+        return new Plateau(taille, buffer);
     }
     
     public void printPosDame(){
