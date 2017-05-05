@@ -27,4 +27,45 @@ public class Plateau {
     }
     
     
+    public int getValeurSolution()
+    {
+        int nbConflits = 0;
+        for(int i = 0; i<taille; i++)
+        {
+            int nbDamesSens1 = 0;
+            int nbDamesSens2 = 0;
+            int nbDamesSens3 = 0;
+            int nbDamesSens4 = 0;
+            for (int n = 0; n<=i; n++)
+            {
+                if (posDame[i-n] == n) {
+                    nbDamesSens1 ++;
+                }
+                if (i < taille-1 && posDame[taille-1-i+n] == n) {
+                    nbDamesSens2 ++;
+                }
+                if (posDame[i-n] == taille-1-n) {
+                    nbDamesSens3 ++;
+                }
+                if (i < taille-1 && posDame[taille-1-i+n] == taille-1-n) {
+                    nbDamesSens4 ++;
+                }
+            }
+            if (nbDamesSens1 > 1) {
+                nbConflits += (nbDamesSens1 - 1);
+            }
+             if (nbDamesSens2 > 1) {
+                nbConflits += (nbDamesSens2 - 1);
+            }
+              if (nbDamesSens3 > 1) {
+                nbConflits += (nbDamesSens3 - 1);
+            }
+               if (nbDamesSens4 > 1) {
+                nbConflits += (nbDamesSens4 - 1);
+            }
+        }
+        return nbConflits;
+    }
+    
+    
 }
