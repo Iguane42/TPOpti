@@ -5,6 +5,8 @@
  */
 package Jeu;
 
+import java.util.ArrayList;
+
 /**
  *
  * @author Epulapp
@@ -24,8 +26,56 @@ public class Plateau {
         for(int i = 0; i < this.nbDame; i++){
             this.posDame[i] = i;
         }
+        
+        // Ajout Xavier
+        this.printPosDame();
+        System.out.println("Nombre de voisins : " + this.getVoisin().size());
     }
     
+    public Plateau(int nbDame, int[] posDame){
+        this.nbDame = nbDame;
+        this.taille = nbDame; // Car la taille du plateau est égale à nXn
+        this.posDame = new int[posDame.length]; // Initialise le tableau des positons
+        
+        // Copie la position des dames passé en paramètre
+        for(int i = 0; i < this.nbDame; i++){
+            this.posDame[i] = posDame[i];
+        }
+        
+        
+    }
+    
+    public ArrayList<Plateau> getVoisin(){
+        ArrayList<Plateau> voisins = new ArrayList<>();
+        
+        for(int i = 0; i < this.nbDame; i++){
+            for(int n = i+1; n < this.nbDame; n++){
+                int[] posSolution = new int[this.nbDame];
+                
+                posSolution = this.posDame.clone();
+                posSolution[i] = this.posDame[n];
+                posSolution[n] = this.posDame[i];
+                
+                Plateau plateauVoisin = new Plateau(this.nbDame, posSolution);
+                plateauVoisin.printPosDame();
+                voisins.add(plateauVoisin);
+            }
+        }
+        
+        return voisins;
+    }
+    
+    public void printPosDame(){
+        String tab = "[";
+        for(int i = 0; i < this.nbDame; i++){
+            tab += this.posDame[i];
+            if(i < this.nbDame-1){
+                tab += ",";
+            }
+        }
+        tab += "]";
+        System.out.println(tab);
+    }
     
     public int getValeurSolution()
     {
