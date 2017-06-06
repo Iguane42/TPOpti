@@ -19,6 +19,7 @@ public class Plateau {
     private int[] posDame;
     private int valeur = -1;
     private static Random rand = new Random();
+    private int[] permutation;
     
     public Plateau(int nbDame){
         this.nbDame = nbDame;
@@ -60,6 +61,7 @@ public class Plateau {
                 posSolution[n] = this.getPosDame()[i];
                 
                 Plateau plateauVoisin = new Plateau(this.nbDame, posSolution);
+                plateauVoisin.permutation = new int[]{i, n};
                 //plateauVoisin.printPosDame();
                 voisins.add(plateauVoisin);
             }
@@ -80,6 +82,48 @@ public class Plateau {
         buffer[x2] = getPosDame()[x1];
         return new Plateau(taille, buffer);
     }
+
+//    public ArrayList<Plateau> getVoisin(ArrayList<Plateau> listeTabou){
+//        ArrayList<Plateau> voisins = new ArrayList<>();
+//        
+//        for(int i = 0; i < this.nbDame; i++){
+//            for(int n = i+1; n < this.nbDame; n++){
+//                if(!listeTabou.isEmpty()){
+//                    for(int j = 0; j < listeTabou.size(); j++){
+//                        int[] pTabou = listeTabou.get(j).getPermutation();
+//                        if((pTabou[0] == i && pTabou[1] == n) || (pTabou[0] == n && pTabou[1] == i)){
+//                        } else{
+//                            
+//                            int[] posSolution = new int[this.nbDame];
+//
+//                            posSolution = this.posDame.clone();
+//                            posSolution[i] = this.posDame[n];
+//                            posSolution[n] = this.posDame[i];
+//
+//                            Plateau plateauVoisin = new Plateau(this.nbDame, posSolution);
+//                            plateauVoisin.permutation = new int[]{i, n};
+//                            //plateauVoisin.printPosDame();
+//                            voisins.add(plateauVoisin);
+//                        }
+//                    }
+//                } else{
+//                    int[] posSolution = new int[this.nbDame];
+//
+//                    posSolution = this.posDame.clone();
+//                    posSolution[i] = this.posDame[n];
+//                    posSolution[n] = this.posDame[i];
+//
+//                    Plateau plateauVoisin = new Plateau(this.nbDame, posSolution);
+//                    plateauVoisin.permutation = new int[]{i, n};
+//                    //plateauVoisin.printPosDame();
+//                    voisins.add(plateauVoisin);
+//                }   
+//            }
+//        }
+//        
+//        return voisins;
+//    }
+
     
     public void printPosDame(){
         String tab = "[";
@@ -149,6 +193,12 @@ public class Plateau {
      */
     public void setPosDame(int[] posDame) {
         this.posDame = posDame;
+    }
+    /**
+     * @return the permutation
+     */
+    public int[] getPermutation() {
+        return permutation;
     }
     
     
