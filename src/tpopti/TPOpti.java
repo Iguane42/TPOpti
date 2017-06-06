@@ -7,6 +7,7 @@ package tpopti;
 
 import Jeu.Plateau;
 import metaheuristique.RecuitSimule;
+import metaheuristique.Genetique;
 
 /**
  *
@@ -19,9 +20,9 @@ public class TPOpti {
      */
     public static void main(String[] args) {
         // TODO code application logic here
-        Plateau p = new Plateau(500);
-        RecuitSimule rs = new RecuitSimule();
-        Plateau sol = rs.getSolution(p);
+        //Plateau p = new Plateau(500);
+        Genetique rs = new Genetique();
+        Plateau sol = rs.getSolution(10);
         sol.printPosDame();
         System.out.println(sol.getValeurSolution());
     }

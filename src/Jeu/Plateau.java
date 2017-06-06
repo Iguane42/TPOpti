@@ -55,9 +55,9 @@ public class Plateau {
             for(int n = i+1; n < this.nbDame; n++){
                 int[] posSolution/* = new int[this.nbDame]*/;
                 
-                posSolution = this.posDame.clone();
-                posSolution[i] = this.posDame[n];
-                posSolution[n] = this.posDame[i];
+                posSolution = this.getPosDame().clone();
+                posSolution[i] = this.getPosDame()[n];
+                posSolution[n] = this.getPosDame()[i];
                 
                 Plateau plateauVoisin = new Plateau(this.nbDame, posSolution);
                 //plateauVoisin.printPosDame();
@@ -75,16 +75,16 @@ public class Plateau {
         while (x1 == x2) {
             x2 = rand.nextInt(taille);
         }
-        int[] buffer = posDame.clone();
-        buffer[x1] = posDame[x2];
-        buffer[x2] = posDame[x1];
+        int[] buffer = getPosDame().clone();
+        buffer[x1] = getPosDame()[x2];
+        buffer[x2] = getPosDame()[x1];
         return new Plateau(taille, buffer);
     }
     
     public void printPosDame(){
         String tab = "[";
         for(int i = 0; i < this.nbDame; i++){
-            tab += this.posDame[i];
+            tab += this.getPosDame()[i];
             if(i < this.nbDame-1){
                 tab += ",";
             }
@@ -105,16 +105,16 @@ public class Plateau {
                 int nbDamesSens4 = 0;
                 for (int n = 0; n<=i; n++)
                 {
-                    if (posDame[i-n] == n) {
+                    if (getPosDame()[i-n] == n) {
                         nbDamesSens1 ++;
                     }
-                    if (i < taille-1 && posDame[taille-1-i+n] == n) {
+                    if (i < taille-1 && getPosDame()[taille-1-i+n] == n) {
                         nbDamesSens2 ++;
                     }
-                    if (posDame[i-n] == taille-1-n) {
+                    if (getPosDame()[i-n] == taille-1-n) {
                         nbDamesSens3 ++;
                     }
-                    if (i < taille-1 && posDame[taille-1-i+n] == taille-1-n) {
+                    if (i < taille-1 && getPosDame()[taille-1-i+n] == taille-1-n) {
                         nbDamesSens4 ++;
                     }
                 }
@@ -135,6 +135,20 @@ public class Plateau {
         }
         
         return valeur;
+    }
+
+    /**
+     * @return the posDame
+     */
+    public int[] getPosDame() {
+        return posDame;
+    }
+
+    /**
+     * @param posDame the posDame to set
+     */
+    public void setPosDame(int[] posDame) {
+        this.posDame = posDame;
     }
     
     
