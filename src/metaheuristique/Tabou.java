@@ -14,28 +14,39 @@ import java.util.ArrayList;
  */
 public class Tabou implements IAlgorithme{
 
-    static final int MAXITERATION = 10; // Nombre d'itération maximun
-    static final int NBTABOU = 1; // Taille de la liste tabou
+    static final int MAXITERATION = 1000; // Nombre d'itération maximun
+    static final int NBTABOU = 5; // Taille de la liste tabou
         
     @Override
     public Plateau getSolution(Plateau x0) {
         
         Plateau xMin = x0; // Plateau de la meilleure solution
         int fMin = xMin.getValeurSolution(); // Valeur de la meilleure solution
+        int i = 0; // Compteur
+        
         Plateau xActuel = xMin; // Plateau actuel
         int fActuelle = fMin; // Valeur actuelle
-        int i = 0; // Compteur
+        
         ArrayList<Plateau> C = new ArrayList<>();
-        ArrayList<Plateau> listeTabou = new ArrayList<>();
+        ArrayList<Plateau> listeTabou = new ArrayList<>(); // Stocke des plateaux mais seule la permutation nous interesse
+        
+        int pct = 0; // POUR TEST
         
         do{
             // On récupère tous les voisins
             C = xActuel.getVoisin();
-            // On enlève les voisins tabous
-            for(Plateau voisin : C){
-                for(int j = 0; j < NBTABOU; j++){
-                    if(voisin == listeTabou.get(j)){
-                        C.remove(voisin);
+            
+            // On enlève les permutations tabous
+            if(!listeTabou.isEmpty()){
+                //for(Plateau voisin : C){
+                for(int v = 0; v < C.size(); v++){
+                    int[] pV = C.get(v).getPermutation();
+                    for(int j = 0; j < listeTabou.size(); j++){
+                        int[] pT = listeTabou.get(j).getPermutation();
+                        if((pV[0] == pT[0] && pV[1] == pT[1]) || (pV[0] == pT[1] && pV[1] == pT[0])){
+                            j = listeTabou.size() +1;
+                            C.remove(v);
+                        }
                     }
                 }
             }
@@ -52,7 +63,7 @@ public class Tabou implements IAlgorithme{
                     
                     if(C.indexOf(voisin) == 0){
                         meilleurVoisin = voisin;
-                        minSolution = voisin.getValeurSolution();
+                        minSolution = valeurVoisin;
                     } else if(valeurVoisin < minSolution){
                         meilleurVoisin = voisin;
                         minSolution = valeurVoisin;
@@ -64,18 +75,31 @@ public class Tabou implements IAlgorithme{
                 
                 // Si aucun voisin meilleur que la solution actuelle
                 if(deltaF >= 0){
-                    // MAJ listetabou
+                    if(listeTabou.size() >= NBTABOU){
+                        listeTabou.remove(0);
+                        listeTabou.add(meilleurVoisin);
+                    } else{
+                        listeTabou.add(meilleurVoisin);
+                    }
                 }
                 
                 // Si un voisin est meilleur que la solution générale
-                if(deltaF < fMin){
+                if(minSolution < fMin){
                     fMin = minSolution;
                     xMin = meilleurVoisin;
                 }
+                
+                xActuel = meilleurVoisin;
+                fActuelle = minSolution;
             }
             // On incrémente le compteur
             i++;
-        } while((i == MAXITERATION) || C == null);
+            
+            if((i*100/MAXITERATION) != pct){
+                pct = (i*100/MAXITERATION);
+                System.out.println(pct + "%");
+            }
+        } while((i <= MAXITERATION) && (C.size() != 0) && (fActuelle != 0));
         
         return xMin;
     }
