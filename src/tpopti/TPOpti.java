@@ -25,7 +25,8 @@ public class TPOpti {
         //Plateau p = new Plateau(500);
 //        Genetique rs = new Genetique();
 //        Plateau sol = rs.getSolution(10);
-        Plateau p = new Plateau(300);
+
+        Plateau p = new Plateau(400);
         Tabou rs = new Tabou();
         Plateau sol = rs.getSolution(p);
         System.out.println(p.getValeurSolution());
