@@ -72,15 +72,17 @@ public class Plateau {
     
     public Plateau getRandomVoisin()
     {
-        int x1 = rand.nextInt(taille);
-        int x2 = rand.nextInt(taille);
+        int x1 = rand.nextInt(getTaille());
+        int x2 = rand.nextInt(getTaille());
         while (x1 == x2) {
-            x2 = rand.nextInt(taille);
+            x2 = rand.nextInt(getTaille());
         }
         int[] buffer = getPosDame().clone();
         buffer[x1] = getPosDame()[x2];
         buffer[x2] = getPosDame()[x1];
-        return new Plateau(taille, buffer);
+        Plateau p = new Plateau(getTaille(), buffer);
+        p.permutation = new int[]{x1, x2};
+        return p;
     }
 
 //    public ArrayList<Plateau> getVoisin(ArrayList<Plateau> listeTabou){
@@ -141,7 +143,7 @@ public class Plateau {
     {
         if (valeur < 0) {
             int nbConflits = 0;
-            for(int i = 0; i<taille; i++)
+            for(int i = 0; i<getTaille(); i++)
             {
                 int nbDamesSens1 = 0;
                 int nbDamesSens2 = 0;
@@ -152,13 +154,13 @@ public class Plateau {
                     if (getPosDame()[i-n] == n) {
                         nbDamesSens1 ++;
                     }
-                    if (i < taille-1 && getPosDame()[taille-1-i+n] == n) {
+                    if (i < getTaille()-1 && getPosDame()[getTaille()-1-i+n] == n) {
                         nbDamesSens2 ++;
                     }
-                    if (getPosDame()[i-n] == taille-1-n) {
+                    if (getPosDame()[i-n] == getTaille()-1-n) {
                         nbDamesSens3 ++;
                     }
-                    if (i < taille-1 && getPosDame()[taille-1-i+n] == taille-1-n) {
+                    if (i < getTaille()-1 && getPosDame()[getTaille()-1-i+n] == getTaille()-1-n) {
                         nbDamesSens4 ++;
                     }
                 }
@@ -199,6 +201,13 @@ public class Plateau {
      */
     public int[] getPermutation() {
         return permutation;
+    }
+
+    /**
+     * @return the taille
+     */
+    public int getTaille() {
+        return taille;
     }
     
     
