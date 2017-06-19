@@ -14,8 +14,9 @@ import java.util.ArrayList;
  */
 public class Tabou implements IAlgorithme{
 
-    static final int MAXITERATION = 1000; // Nombre d'itération maximun
+    static final int MAXITERATION = 10000; // Nombre d'itération maximun
     static final int NBTABOU = 5; // Taille de la liste tabou
+    static final int NBVOISINS = 200;
         
     @Override
     public Plateau getSolution(Plateau x0) {
@@ -34,7 +35,39 @@ public class Tabou implements IAlgorithme{
         
         do{
             // On récupère tous les voisins
-            C = xActuel.getVoisin();
+            /*
+            * Algorithme de base
+            */
+            //C = xActuel.getVoisin();
+            
+            /*
+            * Algorithme modifié
+            */
+            C.clear();
+            
+            int cpt = 0;
+            int chienDeGarde = 0;
+            while(cpt < NBVOISINS && chienDeGarde < NBVOISINS*2){
+                chienDeGarde++;
+                boolean present = false;
+                Plateau tmp = xActuel.getRandomVoisin();
+
+                for(Plateau voisin : C){
+                    if(voisin == tmp){
+                        present = true;
+                    }
+                }
+
+                if(!present){
+                    C.add(tmp);
+                    cpt++;
+                }
+
+            }
+            
+            /*
+            * Suite de l'algorithme
+            */
             
             // On enlève les permutations tabous
             if(!listeTabou.isEmpty()){
@@ -97,10 +130,10 @@ public class Tabou implements IAlgorithme{
             
             if((i*100/MAXITERATION) != pct){
                 pct = (i*100/MAXITERATION);
-                System.out.println(pct + "%");
+                //System.out.println(pct + "%");
             }
         } while((i <= MAXITERATION) && (C.size() != 0) && (fActuelle != 0));
-        
+        System.err.println("Itération : " + i);
         return xMin;
     }
     
